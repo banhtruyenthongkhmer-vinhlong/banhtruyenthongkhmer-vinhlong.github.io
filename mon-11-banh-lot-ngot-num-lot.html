@@ -1348,12 +1348,12 @@ html[data-theme="terracotta"] .poetic-homeland-banner {
             <span class="h-3.5 w-[1px] bg-amber-300/80 hidden sm:inline-block"></span>
 
             <button type="button" id="music-mute-toggle-btn" class="w-5 h-5 rounded-full bg-amber-50 hover:bg-amber-200 text-[#0F4C3A] border border-amber-300 flex items-center justify-center text-[9px] transition-all shrink-0" title="Tắt / Bật tiếng (Mute/Unmute)" aria-label="Tắt hoặc bật tiếng">
-              <i id="music-volume-icon" class="fa-solid fa-volume-high"></i>
+              <i id="music-volume-icon" class="fa-solid fa-volume-low"></i>
             </button>
 
             <div class="flex items-center gap-1 pr-0.5" title="Chỉnh âm lượng nhạc nền (0% - 100%)">
-              <input id="music-volume-slider" type="range" min="0" max="100" value="75" class="w-12 sm:w-14 h-1.5 accent-[#0F4C3A] cursor-pointer" aria-label="Âm lượng nhạc nền" />
-              <span id="music-volume-pct" class="text-[9px] font-extrabold text-[#0F4C3A] min-w-[24px] text-right tabular-nums">75%</span>
+              <input id="music-volume-slider" type="range" min="0" max="100" value="35" class="w-12 sm:w-14 h-1.5 accent-[#0F4C3A] cursor-pointer" aria-label="Âm lượng nhạc nền" />
+              <span id="music-volume-pct" class="text-[9px] font-extrabold text-[#0F4C3A] min-w-[24px] text-right tabular-nums">35%</span>
             </div>
 
             <button type="button" id="music-loop-badge" class="hidden md:inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-emerald-100 text-[#0F4C3A] border border-emerald-500/60 text-[9px] font-extrabold transition-all shrink-0" title="Bật / Tắt chế độ tự động lặp lại bài nhạc">
@@ -17535,10 +17535,10 @@ document.addEventListener("DOMContentLoaded", () => {
     return `${m}:${s < 10 ? "0" + s : s}`;
   }
 
-  let savedVolume = 0.75;
+  let savedVolume = 0.35;
   let isUserScrubbingAudio = false;
   try {
-    const vRaw = localStorage.getItem("khmer_heritage_music_volume_v1");
+    const vRaw = localStorage.getItem("khmer_heritage_music_volume_v2");
     if (vRaw !== null) {
       const parsed = parseFloat(vRaw);
       if (!isNaN(parsed) && parsed >= 0 && parsed <= 1) savedVolume = parsed;
@@ -17671,7 +17671,7 @@ document.addEventListener("DOMContentLoaded", () => {
     userAudioEl.muted = pct === 0;
     if (pct > 0) savedVolume = userAudioEl.volume;
     try {
-      localStorage.setItem("khmer_heritage_music_volume_v1", String(userAudioEl.volume));
+      localStorage.setItem("khmer_heritage_music_volume_v2", String(userAudioEl.volume));
     } catch (err) {}
     syncVolumeUi();
   });
@@ -17680,7 +17680,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!userAudioEl) return;
     if (userAudioEl.muted || userAudioEl.volume === 0) {
       userAudioEl.muted = false;
-      userAudioEl.volume = savedVolume > 0 ? savedVolume : 0.75;
+      userAudioEl.volume = savedVolume > 0 ? savedVolume : 0.35;
     } else {
       savedVolume = userAudioEl.volume;
       userAudioEl.muted = true;
