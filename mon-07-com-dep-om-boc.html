@@ -2109,27 +2109,7 @@ const KHMER_FESTIVAL_SEASONS = [
 ];
 window.KHMER_FESTIVAL_SEASONS = KHMER_FESTIVAL_SEASONS;
 
-function playKitchenBellChime() {
-  try {
-    const AudioCtx = window.AudioContext || window.webkitAudioContext;
-    if (!AudioCtx) return;
-    const ctx = new AudioCtx();
-    const notes = [523.25, 659.25, 783.99, 1046.5];
-    notes.forEach((freq, i) => {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = "sine";
-      osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.14);
-      gain.gain.setValueAtTime(0.001, ctx.currentTime + i * 0.14);
-      gain.gain.exponentialRampToValueAtTime(0.18, ctx.currentTime + i * 0.14 + 0.03);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.14 + 0.55);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start(ctx.currentTime + i * 0.14);
-      osc.stop(ctx.currentTime + i * 0.14 + 0.58);
-    });
-  } catch (e) {}
-}
+function playKitchenBellChime() {}
 
 const VINH_LONG_REGIONS = [
   {
@@ -8562,9 +8542,9 @@ module.exports = QRCode;
 })();
 
 
-const DEFAULT_GITHUB_PAGES_URL = "https://banhtruyenthongkhmer-vinhlong.github.io";
+const DEFAULT_PUBLIC_SITE_URL = "https://banhtruyenthongkhmer-vinhlong.github.io";
 
-const GITHUB_REPO_DISH_FILES = {
+const DISH_PAGE_FILES = {
   1: "mon-01-banh-tet-tra-cuon.html",
   2: "mon-02-banh-ong-num-kong-pong.html",
   3: "mon-03-banh-thot-not-num-thnaot.html",
@@ -8590,30 +8570,14 @@ function getDishPageFileName(cakeOrId) {
     typeof cakeOrId === "object" && cakeOrId !== null
       ? cakeOrId
       : allDishes.find((d) => d.id === parseInt(cakeOrId, 10)) || allDishes[0] || { id: 1, slug: "banh-tet-tra-cuon" };
-  if (GITHUB_REPO_DISH_FILES[cake.id]) {
-    return GITHUB_REPO_DISH_FILES[cake.id];
+  if (DISH_PAGE_FILES[cake.id]) {
+    return DISH_PAGE_FILES[cake.id];
   }
   const padId = String(cake.id).padStart(2, "0");
   return `mon-${padId}-${cake.slug}.html`;
 }
 
 function getEffectiveBaseUrl() {
-  try {
-    const saved = localStorage.getItem(STORAGE_BASE_URL_KEY);
-    if (saved && saved.trim()) {
-      const cleaned = saved.trim().replace(/\/+$/, "");
-      if (
-        !cleaned.includes("baotonbanhkhmer-vinhlong.vn") &&
-        !cleaned.includes("googleusercontent") &&
-        !cleaned.startsWith("file:")
-      ) {
-        return cleaned;
-      } else {
-        localStorage.removeItem(STORAGE_BASE_URL_KEY);
-      }
-    }
-  } catch (e) {}
-
   const { protocol, host, pathname } = window.location;
   if (
     (protocol === "http:" || protocol === "https:") &&
@@ -8627,20 +8591,12 @@ function getEffectiveBaseUrl() {
       .replace(/\/+$/, "");
     return `${protocol}//${host}${cleanPath}`;
   }
-  return DEFAULT_GITHUB_PAGES_URL;
+  return DEFAULT_PUBLIC_SITE_URL;
 }
 
-function saveCustomBaseUrl(url) {
-  try {
-    if (url && url.trim() && !url.includes("baotonbanhkhmer-vinhlong.vn")) {
-      localStorage.setItem(STORAGE_BASE_URL_KEY, url.trim().replace(/\/+$/, ""));
-    } else {
-      localStorage.removeItem(STORAGE_BASE_URL_KEY);
-    }
-  } catch (e) {}
-}
+function saveCustomBaseUrl() {}
 
-let globalQrPayloadMode = "url"; // "url" (Link trang riêng từng món trên GitHub) hoặc "card" (Thẻ công thức tóm tắt kèm link)
+let globalQrPayloadMode = "url";
 
 function buildSpokeDeepLink(cakeId, customBase, modeOverride) {
   const base = (customBase !== undefined && customBase !== null && String(customBase).trim()
@@ -8656,13 +8612,14 @@ function buildSpokeDeepLink(cakeId, customBase, modeOverride) {
 
   const allDishes = window.BANH_TET_DATA || [];
   const cake = allDishes.find((d) => d.id === parseInt(cakeId, 10)) || allDishes[0];
-  const pageFile = getDishPageFileName(cake);
-  const directPageUrl = `${base}/${pageFile}`;
+  // Sử dụng đường dẫn chuẩn ?id=<id>#trang-mon-<id>-<slug> để luôn mở chính xác món bánh tương ứng trên mọi thiết bị
+  const directPageUrl = `${base}/?id=${cake.id}#trang-mon-${cake.id}-${cake.slug}`;
 
   const mode = modeOverride || globalQrPayloadMode;
   if (mode === "card") {
     return `${cake.qrCodeId} - ${cake.name} (${cleanCategoryLabel(cake.categoryName)})
-Link: ${directPageUrl}`;
+Xuất xứ: ${cake.originExact}
+Nguyên liệu: ${cake.coreSummary}`;
   }
   return directPageUrl;
 }
@@ -8678,7 +8635,7 @@ function encodeUtf8ForQr(str) {
 function renderRealQrCode(containerEl, targetUrl, size = 180, darkColor = "#1C1917") {
   if (!containerEl) return;
   containerEl.innerHTML = "";
-  const safePayload = String(targetUrl || `${DEFAULT_GITHUB_PAGES_URL}/`).trim();
+  const safePayload = String(targetUrl || `${DEFAULT_PUBLIC_SITE_URL}/`).trim();
 
   const canvas = document.createElement("canvas");
   canvas.style.display = "block";
@@ -8740,7 +8697,7 @@ function downloadQrStampPng(cake, targetUrl, qrContainerEl, styleMode = "standee
 
     ctx.fillStyle = "#A7F3D0";
     ctx.font = "700 13px monospace";
-    ctx.fillText(`Trang riêng: ${pageFile}`, 340, 138);
+    ctx.fillText(`Khu vực: ${cleanCategoryLabel(cake.categoryName)}`, 340, 138);
 
     if (dishImgEl && styleMode === "standee") {
       ctx.save();
@@ -8812,8 +8769,7 @@ function downloadQrStampPng(cake, targetUrl, qrContainerEl, styleMode = "standee
 
     ctx.fillStyle = "#57534E";
     ctx.font = "600 12px monospace";
-    const displayUrl = targetUrl.length > 62 ? targetUrl.slice(0, 59) + "..." : targetUrl;
-    ctx.fillText(displayUrl, 340, qrTop + 418);
+    ctx.fillText(`Bảo Tồn Bánh Truyền Thống Khmer Vĩnh Long • Mã định danh ${cake.qrCodeId}`, 340, qrTop + 418);
 
     // Invisible signature pixel at (0,0) for 100% cross-browser QR image upload decoding
     ctx.fillStyle = `rgb(253, 251, ${230 + (cake.id || 1)})`;
@@ -8965,7 +8921,7 @@ function downloadFullRecipeCardPng(cake, batchCount) {
     ctx.font = "600 12.5px sans-serif";
     ctx.fillText("Quét mở trang riêng:", 735, 992);
     ctx.font = "700 11px monospace";
-    ctx.fillText(getDishPageFileName(cake), 735, 1014);
+    ctx.fillText(cake.badgeText || cake.name, 735, 1014);
 
     // Invisible signature pixel for QR uploader
     ctx.fillStyle = `rgb(253, 251, ${230 + (cake.id || 1)})`;
@@ -9055,7 +9011,7 @@ function downloadAll14QrMasterPosterPng(allDishes, baseUrl) {
 
     ctx.fillStyle = "#9E2A2B";
     ctx.font = "700 11.5px monospace";
-    ctx.fillText(getDishPageFileName(dish), x + cardW / 2, y + 244);
+    ctx.fillText(`Mã định danh: ${dish.qrCodeId}`, x + cardW / 2, y + 244);
 
     ctx.fillStyle = "#57534E";
     ctx.font = "600 11.5px sans-serif";
@@ -9091,7 +9047,7 @@ function downloadAll14QrMasterPosterPng(allDishes, baseUrl) {
   ctx.fillText("Cổng Bảo Tồn 3 Khu Vực", sx + cardW / 2, sy + 220);
   ctx.fillStyle = "#FACC15";
   ctx.font = "700 11px monospace";
-  ctx.fillText("banhtruyenthongkhmer-vinhlong.github.io", sx + cardW / 2, sy + 244);
+  ctx.fillText("Trà Vinh • Vĩnh Long • Bến Tre", sx + cardW / 2, sy + 244);
   ctx.fillStyle = "#A7F3D0";
   ctx.font = "700 11.5px sans-serif";
   ctx.fillText("Quét mở Trang Chủ toàn dự án", sx + cardW / 2, sy + 268);
@@ -9475,8 +9431,8 @@ function renderSpokeContentInto(detailContainer, currentBanh, data, isSinglePage
               <p class="text-xs text-stone-600 mt-0.5 leading-relaxed">
                 Quét mã để mở trực tiếp công thức trên điện thoại hoặc tải nhãn dán lên giỏ quà bánh dân gian.
               </p>
-              <p class="text-[11px] font-mono font-semibold text-stone-700 bg-stone-100 px-2 py-1 rounded-lg mt-2 break-all">
-                ${spokeDeepLink}
+              <p class="text-[11px] font-bold text-[#0F4C3A] bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-lg mt-2 inline-block">
+                <i class="fa-solid fa-qrcode mr-1"></i>Mã định danh: ${currentBanh.qrCodeId} • ${cleanCategoryLabel(currentBanh.categoryName)}
               </p>
             </div>
             <div id="detail-inline-qr" class="real-qr-box w-24 h-24 p-2 bg-white border border-stone-300 rounded-2xl shadow-sm shrink-0 flex items-center justify-center"></div>
@@ -15176,17 +15132,13 @@ document.addEventListener("DOMContentLoaded", () => {
       } else if (viewTab === "sheet") {
         qrPreviewCard.innerHTML = `
           <div class="text-left bg-stone-50 border border-stone-200 rounded-2xl p-3 mb-2.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-            <div class="flex-1">
-              <label for="qr-base-url-input" class="block text-[10px] font-bold uppercase text-stone-700 mb-0.5">
-                <i class="fa-solid fa-globe text-rose-700 mr-1"></i>Địa chỉ gốc của website:
-              </label>
-              <input
-                id="qr-base-url-input"
-                type="url"
-                value="${currentBaseUrl}"
-                placeholder="https://banhtruyenthongkhmer-vinhlong.github.io"
-                class="w-full px-2.5 py-1.5 rounded-xl bg-white border border-stone-300 text-xs font-semibold text-stone-900"
-              />
+            <div>
+              <p class="text-xs font-extrabold text-[#0F4C3A]">
+                <i class="fa-solid fa-qrcode text-rose-700 mr-1"></i>Bảng Tổng Hợp 14 Mã QR Bánh Truyền Thống Khmer Vĩnh Long
+              </p>
+              <p class="text-[11px] text-stone-600 mt-0.5">
+                Mỗi món bánh có một mã QR định danh riêng (KH-01 → KH-14) để quét mở trực tiếp trang công thức:
+              </p>
             </div>
             <div class="flex items-center gap-1.5 flex-wrap shrink-0">
               <button
@@ -15211,13 +15163,12 @@ document.addEventListener("DOMContentLoaded", () => {
           <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5 my-2 max-h-80 overflow-y-auto p-1">
             ${data
               .map((item) => {
-                const itemFile = getDishPageFileName(item);
                 return `
                   <div class="bg-white p-2.5 rounded-2xl border border-[#C8922A]/50 flex flex-col items-center justify-between shadow-sm">
                     <div class="w-full text-center">
-                      <span class="inline-block px-2 py-0.5 rounded bg-[#0F4C3A] text-amber-200 text-[9px] font-extrabold uppercase">${item.qrCodeId} • Trang #${item.id}</span>
+                      <span class="inline-block px-2 py-0.5 rounded bg-[#0F4C3A] text-amber-200 text-[9px] font-extrabold uppercase">${item.qrCodeId} • Món #${item.id}</span>
                       <p class="text-[11px] font-extrabold text-stone-900 leading-tight mt-1 line-clamp-1">${item.name}</p>
-                      <code class="block text-[9px] text-stone-500 truncate mt-0.5">${itemFile}</code>
+                      <span class="block text-[9px] font-semibold text-stone-500 truncate mt-0.5">${cleanCategoryLabel(item.categoryName)}</span>
                     </div>
                     <div id="sheet-qr-box-${item.id}" class="real-qr-box w-20 h-20 my-1.5 p-1 bg-white border border-stone-200 rounded-xl flex items-center justify-center"></div>
                     <div class="w-full grid grid-cols-2 gap-1 mt-1">
@@ -15279,33 +15230,33 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div id="real-qr-render-target" class="real-qr-box w-full h-full flex items-center justify-center"></div>
               </div>
               <h4 class="text-sm font-extrabold text-stone-900 mt-1">${cake.name}</h4>
-              <code class="inline-block text-[10px] font-mono font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded border border-rose-200 mt-1">
-                ${pageFile}
-              </code>
+              <span class="inline-block text-[10px] font-bold text-[#0F4C3A] bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200 mt-1">
+                ${cleanCategoryLabel(cake.categoryName)} • Món #${cake.id}
+              </span>
             </div>
 
-            <!-- Cột Phải: Tùy Chỉnh Chế Độ Mã QR, Tải Nhãn & Tải Trang Riêng -->
+            <!-- Cột Phải: Tùy Chỉnh Chế Độ Mã QR & Tải Nhãn -->
             <div class="md:col-span-7 space-y-2.5">
-              <div class="bg-stone-50 border border-stone-200 rounded-2xl p-2.5">
-                <label class="block text-[10px] font-extrabold uppercase text-stone-700 mb-1">
-                  <i class="fa-solid fa-sliders text-rose-700 mr-1"></i>Nội dung nhúng trong Mã QR của món ${cake.name}:
+              <div class="bg-stone-50 border border-stone-200 rounded-2xl p-3">
+                <label class="block text-[10px] font-extrabold uppercase text-stone-700 mb-1.5">
+                  <i class="fa-solid fa-sliders text-rose-700 mr-1"></i>Chế độ Mã QR của món ${cake.name}:
                 </label>
-                <div class="grid grid-cols-2 gap-1.5 mb-2">
+                <div class="grid grid-cols-2 gap-1.5">
                   <button
                     type="button"
                     data-qr-mode="url"
-                    class="qr-mode-switch-btn py-1.5 px-2 rounded-xl text-[11px] font-extrabold border transition-all ${
+                    class="qr-mode-switch-btn py-2 px-2.5 rounded-xl text-[11px] font-extrabold border transition-all ${
                       globalQrPayloadMode === "url"
                         ? "bg-[#0F4C3A] text-amber-200 border-[#C8922A]"
                         : "bg-white text-stone-700 border-stone-300"
                     }"
                   >
-                    <i class="fa-solid fa-link mr-1"></i>Link Trang Riêng (${pageFile})
+                    <i class="fa-solid fa-link mr-1"></i>Mở Trực Tiếp Trang Món (${cake.qrCodeId})
                   </button>
                   <button
                     type="button"
                     data-qr-mode="card"
-                    class="qr-mode-switch-btn py-1.5 px-2 rounded-xl text-[11px] font-extrabold border transition-all ${
+                    class="qr-mode-switch-btn py-2 px-2.5 rounded-xl text-[11px] font-extrabold border transition-all ${
                       globalQrPayloadMode === "card"
                         ? "bg-[#0F4C3A] text-amber-200 border-[#C8922A]"
                         : "bg-white text-stone-700 border-stone-300"
@@ -15314,29 +15265,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     <i class="fa-solid fa-file-lines mr-1"></i>Thẻ Công Thức Trực Tiếp
                   </button>
                 </div>
-
-                <div class="flex items-center justify-between gap-2 mb-0.5">
-                  <label for="qr-base-url-input" class="block text-[10px] font-bold uppercase text-stone-600">
-                    Link GitHub Pages (tự động gắn /${pageFile}):
-                  </label>
-                  <button
-                    type="button"
-                    id="reset-github-base-url-btn"
-                    class="text-[10px] font-extrabold text-[#0F4C3A] hover:underline"
-                    title="Khôi phục tên miền GitHub Pages chính thức"
-                  >
-                    <i class="fa-brands fa-github mr-0.5"></i>Chuẩn GitHub Pages
-                  </button>
-                </div>
-                <input
-                  id="qr-base-url-input"
-                  type="url"
-                  value="${currentBaseUrl}"
-                  placeholder="https://banhtruyenthongkhmer-vinhlong.github.io"
-                  class="w-full px-2.5 py-1.5 rounded-xl bg-white border border-stone-300 text-xs font-semibold text-stone-900"
-                />
-                <p class="text-[10px] text-stone-500 mt-1 break-all line-clamp-2">
-                  Link khi quét QR: <a id="qr-encoded-url-text" href="${buildSpokeDeepLink(cake.id, currentBaseUrl, 'url')}" target="_blank" rel="noopener noreferrer" class="font-bold text-[#0F4C3A] underline">${fullDeepLink}</a>
+                <p class="text-[11px] text-stone-600 mt-2 leading-relaxed">
+                  <i class="fa-solid fa-circle-check text-emerald-700 mr-1"></i>Khi quét mã <strong>${cake.qrCodeId}</strong> bằng điện thoại hoặc máy quét trên web, hệ thống sẽ mở thẳng công thức chi tiết của món <strong>${cake.name}</strong>.
                 </p>
               </div>
 
@@ -15376,7 +15306,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
               </div>
 
-              <div class="grid grid-cols-2 gap-2">
+              <div class="grid grid-cols-1 gap-2">
                 <button
                   type="button"
                   id="download-qr-png-btn"
@@ -15385,7 +15315,6 @@ document.addEventListener("DOMContentLoaded", () => {
                   <i class="fa-solid fa-download text-rose-700"></i>
                   <span>Tải Nhãn QR (${cake.qrCodeId})</span>
                 </button>
-
               </div>
 
               <div class="grid grid-cols-2 gap-2">
@@ -15397,7 +15326,7 @@ document.addEventListener("DOMContentLoaded", () => {
                   <i class="fa-regular fa-copy text-emerald-700"></i>
                   <span id="copy-qr-url-label">Chép link trang riêng</span>
                 </button>
-                <button 
+                <button
                   type="button"
                   id="simulate-qr-jump-btn"
                   class="pop-btn bg-[#0F4C3A] hover:bg-[#093528] text-amber-200 font-extrabold text-xs py-2 px-3 rounded-xl flex items-center justify-center gap-1.5"
@@ -15441,7 +15370,6 @@ document.addEventListener("DOMContentLoaded", () => {
           );
         });
 
-
         const copyBtn = document.getElementById("copy-qr-url-btn");
         const copyLabel = document.getElementById("copy-qr-url-label");
         copyBtn?.addEventListener("click", () => {
@@ -15455,35 +15383,6 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         });
       }
-
-      document.getElementById("reset-github-base-url-btn")?.addEventListener("click", () => {
-        currentBaseUrl = DEFAULT_GITHUB_PAGES_URL;
-        saveCustomBaseUrl(currentBaseUrl);
-        renderSelectedQr(cake.id);
-        showAppToast("Đã đặt về tên miền chuẩn: https://banhtruyenthongkhmer-vinhlong.github.io");
-      });
-
-      const baseUrlInput = document.getElementById("qr-base-url-input");
-      baseUrlInput?.addEventListener("input", (e) => {
-        currentBaseUrl = e.target.value.trim() || DEFAULT_GITHUB_PAGES_URL;
-        saveCustomBaseUrl(currentBaseUrl);
-
-        if (viewTab === "sheet") {
-          data.forEach((item) => {
-            const box = document.getElementById(`sheet-qr-box-${item.id}`);
-            renderRealQrCode(box, buildSpokeDeepLink(item.id, currentBaseUrl, globalQrPayloadMode), 160, qrAccentColor);
-          });
-        } else if (viewTab === "single") {
-          const updatedLink = buildSpokeDeepLink(cake.id, currentBaseUrl, globalQrPayloadMode);
-          const urlCodeEl = document.getElementById("qr-encoded-url-text");
-          if (urlCodeEl) {
-            urlCodeEl.textContent = updatedLink;
-            urlCodeEl.setAttribute("href", buildSpokeDeepLink(cake.id, currentBaseUrl, "url"));
-          }
-          const qrTarget = document.getElementById("real-qr-render-target");
-          renderRealQrCode(qrTarget, updatedLink, 240, qrAccentColor);
-        }
-      });
 
       qrSelectorContainer.querySelectorAll(".qr-tab-btn").forEach((btn) => {
         btn.addEventListener("click", () => {
@@ -17413,73 +17312,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const muteToggleBtn = document.getElementById("music-mute-toggle-btn");
   const volumeIcon = document.getElementById("music-volume-icon");
 
-  // Tạo giai điệu ngũ cung quê hương Nam Bộ êm dịu (WAV 16-bit chuẩn) để tự động phát lặp lại mượt mà ngay cả khi chưa chọn file MP3 ngoài
-  function buildTraditionalPentatonicWavDataUri() {
-    const sampleRate = 22050;
-    // Chuỗi nốt ngũ cung (Hò - Xự - Xang - Xê - Cống) ấm áp, thư thái
-    const notes = [
-      { freq: 261.63, dur: 0.65 }, // C4 (Hò)
-      { freq: 293.66, dur: 0.65 }, // D4 (Xự)
-      { freq: 329.63, dur: 0.85 }, // E4 (Xang)
-      { freq: 392.00, dur: 0.65 }, // G4 (Xê)
-      { freq: 440.00, dur: 0.85 }, // A4 (Cống)
-      { freq: 523.25, dur: 1.10 }, // C5 (Hò cao)
-      { freq: 440.00, dur: 0.65 }, // A4
-      { freq: 392.00, dur: 0.85 }, // G4
-      { freq: 329.63, dur: 0.65 }, // E4
-      { freq: 293.66, dur: 0.65 }, // D4
-      { freq: 329.63, dur: 0.85 }, // E4
-      { freq: 261.63, dur: 1.25 }  // C4
-    ];
-    const totalSec = notes.reduce((acc, n) => acc + n.dur, 0);
-    const numSamples = Math.floor(sampleRate * totalSec);
-    const buffer = new ArrayBuffer(44 + numSamples * 2);
-    const view = new DataView(buffer);
-
-    const writeStr = (offset, str) => {
-      for (let i = 0; i < str.length; i++) view.setUint8(offset + i, str.charCodeAt(i));
-    };
-    writeStr(0, "RIFF");
-    view.setUint32(4, 36 + numSamples * 2, true);
-    writeStr(8, "WAVE");
-    writeStr(12, "fmt ");
-    view.setUint32(16, 16, true);
-    view.setUint16(20, 1, true);
-    view.setUint16(22, 1, true);
-    view.setUint32(24, sampleRate, true);
-    view.setUint32(28, sampleRate * 2, true);
-    view.setUint16(32, 2, true);
-    view.setUint16(34, 16, true);
-    writeStr(36, "data");
-    view.setUint32(40, numSamples * 2, true);
-
-    let sampleIdx = 0;
-    for (let nIdx = 0; nIdx < notes.length; nIdx++) {
-      const { freq, dur } = notes[nIdx];
-      const nSamples = Math.floor(sampleRate * dur);
-      for (let i = 0; i < nSamples && sampleIdx < numSamples; i++, sampleIdx++) {
-        const t = i / sampleRate;
-        const env = Math.min(1, i / (sampleRate * 0.04)) * Math.exp(-2.2 * (t / dur));
-        // Âm sắc đàn tranh / sáo trúc với họa âm bậc 2 và bậc 3 dịu nhẹ
-        const wave =
-          0.62 * Math.sin(2 * Math.PI * freq * t) +
-          0.24 * Math.sin(2 * Math.PI * freq * 2 * t) +
-          0.10 * Math.sin(2 * Math.PI * freq * 3 * t) +
-          0.04 * Math.sin(2 * Math.PI * (freq * 0.5) * t);
-        const val = Math.max(-1, Math.min(1, wave * env * 0.38));
-        view.setInt16(44 + sampleIdx * 2, Math.floor(val * 32767), true);
-      }
-    }
-
-    const bytes = new Uint8Array(buffer);
-    let binary = "";
-    const chunk = 8192;
-    for (let i = 0; i < bytes.length; i += chunk) {
-      binary += String.fromCharCode.apply(null, bytes.subarray(i, i + chunk));
-    }
-    return "data:audio/wav;base64," + btoa(binary);
-  }
-
   let savedVolume = 0.75;
   try {
     const vRaw = localStorage.getItem("khmer_heritage_music_volume_v1");
@@ -17494,10 +17326,8 @@ document.addEventListener("DOMContentLoaded", () => {
     userAudioEl.volume = savedVolume;
     if (typeof CUSTOM_MUSIC_FILE_PATH === "string" && CUSTOM_MUSIC_FILE_PATH.trim()) {
       userAudioEl.src = CUSTOM_MUSIC_FILE_PATH.trim();
-    } else if (!userAudioEl.getAttribute("src")) {
-      userAudioEl.src = buildTraditionalPentatonicWavDataUri();
     }
-    // Đảm bảo nhạc luôn tự động lặp lại liên tục không ngắt quãng
+    // Tự động lặp lại liên tục khi phát hết bài
     userAudioEl.addEventListener("ended", () => {
       userAudioEl.currentTime = 0;
       userAudioEl.play().catch(() => {});
@@ -17549,7 +17379,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!melodyLabel || !melodyBtn) return;
     const isEn = window.currentAppLang === "en";
     if (playing) {
-      melodyLabel.innerHTML = `<span>${isEn ? "Playing (Loop)" : "Đang phát"}</span> <span class="melody-eq-bar"></span><span class="melody-eq-bar" style="animation-delay:0.2s"></span>`;
+      melodyLabel.innerHTML = `<span>${isEn ? "Playing" : "Đang phát"}</span> <span class="melody-eq-bar"></span><span class="melody-eq-bar" style="animation-delay:0.2s"></span>`;
       melodyBtn.classList.add("bg-amber-300", "text-stone-900");
     } else {
       melodyLabel.textContent = isEn ? "Play Music" : "Bật Nhạc";
@@ -17566,26 +17396,24 @@ document.addEventListener("DOMContentLoaded", () => {
       showAppToast(isEn ? "Music paused." : "Đã tạm dừng phát nhạc.");
       return;
     }
-    userAudioEl.loop = true;
-    if (!userAudioEl.getAttribute("src")) {
-      userAudioEl.src = buildTraditionalPentatonicWavDataUri();
+    const currentSrc = userAudioEl.getAttribute("src") || "";
+    if (!currentSrc.trim()) {
+      showAppToast(
+        isEn
+          ? "Please select an audio file (.mp3, .wav, .ogg) from your device to play and auto-loop!"
+          : "Hãy chọn file nhạc (.mp3, .wav, .ogg) từ máy của bạn để phát tự động lặp lại!"
+      );
+      musicFileInput?.click();
+      return;
     }
+    userAudioEl.loop = true;
     try {
       await userAudioEl.play();
       updateMusicButtonState(true);
-      showAppToast(
-        isEn
-          ? "Playing background music (Auto-Loop enabled • Adjust volume anytime)!"
-          : "Đang phát nhạc nền tự động lặp lại (Bạn có thể chỉnh âm lượng tùy ý)!"
-      );
+      showAppToast(isEn ? "Playing your music (Auto-Loop enabled)!" : "Đang phát nhạc của bạn (Tự động lặp lại)!");
     } catch (err) {
-      userAudioEl.src = buildTraditionalPentatonicWavDataUri();
-      try {
-        await userAudioEl.play();
-        updateMusicButtonState(true);
-      } catch (e2) {
-        updateMusicButtonState(false);
-      }
+      updateMusicButtonState(false);
+      musicFileInput?.click();
     }
   });
 
@@ -17604,7 +17432,7 @@ document.addEventListener("DOMContentLoaded", () => {
       updateMusicButtonState(true);
       showAppToast(`Đang phát lặp lại file nhạc: ${file.name}`);
     } catch (err) {
-      showAppToast(`Đã nạp file nhạc: ${file.name}. Bấm 'Bật Nhạc' để phát!`);
+      showAppToast(`Đã nạp file nhạc: ${file.name}. Bấm "Bật Nhạc" để phát!`);
     }
   });
 
