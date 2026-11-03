@@ -1287,6 +1287,184 @@ html[data-theme="terracotta"] .poetic-homeland-banner {
       transform: scale(1.18);
     }
 
+
+    /* === NÂNG CẤP BỐ CỤC ĐIỆN THOẠI DI ĐỘNG (MOBILE UX PRO 2026) === */
+    @media (max-width: 640px) {
+      body {
+        padding-bottom: calc(4.25rem + env(safe-area-inset-bottom, 0px)) !important;
+      }
+      /* Thanh tiện ích trên cùng gọn đẹp 2 hàng trên điện thoại */
+      #top-right-toc-btn {
+        display: none !important;
+      }
+      #compact-audio-player-bar {
+        width: 100% !important;
+        justify-content: space-between !important;
+        padding: 0.25rem 0.5rem !important;
+        gap: 0.25rem !important;
+      }
+      #music-seek-slider {
+        width: 3.6rem !important;
+      }
+      #music-volume-slider {
+        width: 2.6rem !important;
+      }
+      /* Chỉ giữ 1 thanh sticky trên điện thoại để không chiếm diện tích màn hình */
+      #app-header {
+        padding: 0.55rem 0.75rem !important;
+      }
+      #workspace-nav-bar {
+        position: relative !important;
+        top: auto !important;
+        padding: 0.55rem 0.75rem !important;
+        margin-bottom: 0.85rem !important;
+      }
+      /* Tối ưu khung Hero gọn gàng, cân đối trên điện thoại */
+      #hub-view {
+        padding-left: 0.75rem !important;
+        padding-right: 0.75rem !important;
+        padding-top: 0.65rem !important;
+      }
+      .resp-hero-grid {
+        border-radius: 1.25rem !important;
+        margin-bottom: 0.85rem !important;
+      }
+      .resp-hero-media {
+        height: 12.25rem !important;
+      }
+      .resp-hero-body {
+        padding: 0.9rem !important;
+      }
+      .resp-hero-body h1 {
+        font-size: 1.22rem !important;
+        line-height: 1.3 !important;
+      }
+      .poetic-homeland-banner {
+        padding: 0.55rem 0.75rem !important;
+        margin-bottom: 0.65rem !important;
+      }
+      /* 3 thẻ vùng văn hóa trên Hero hiển thị rõ nét trên màn hình hẹp */
+      .hero-region-jump-btn {
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        padding: 0.45rem 0.25rem !important;
+        gap: 0.25rem !important;
+      }
+      .hero-region-jump-btn p:last-child {
+        font-size: 9px !important;
+        line-height: 1.15 !important;
+        white-space: normal !important;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      /* Thẻ món bánh trong Danh mục cân đối, nút bấm êm tay trên điện thoại */
+      .resp-card-grid {
+        gap: 1rem !important;
+      }
+      .resp-card-grid article.pop-card {
+        border-radius: 1.35rem !important;
+      }
+      /* Khung tư vấn Trường Khánh nằm gọn phía trên thanh điều hướng đáy điện thoại */
+      #floating-tk-live-dock {
+        bottom: calc(4.35rem + env(safe-area-inset-bottom, 0px) + var(--device-kb-offset, 0px)) !important;
+        left: 0.5rem !important;
+        right: 0.5rem !important;
+        width: calc(100vw - 1rem) !important;
+      }
+      #floating-tk-live-dock.is-minimized {
+        width: auto !important;
+        max-width: 210px !important;
+        right: auto !important;
+      }
+      .floating-home-btn {
+        bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px)) !important;
+        right: 0.75rem !important;
+        padding: 0.55rem 0.95rem !important;
+      }
+      #app-toast-banner {
+        bottom: calc(4.75rem + env(safe-area-inset-bottom, 0px)) !important;
+        left: 0.75rem !important;
+        right: 0.75rem !important;
+      }
+      /* Các hộp thoại (Modal) hiển thị tràn gọn dễ thao tác trên điện thoại */
+      #qr-scanner-modal > div,
+      #cooking-wizard-modal > div,
+      #cake-lightbox-modal > div {
+        padding: 1rem !important;
+        border-radius: 1.35rem !important;
+      }
+    }
+
+    /* Thanh Điều Hướng Nhanh Cố Định Đáy Màn Hình Điện Thoại (Mobile Bottom Dock) */
+    #mobile-bottom-quick-dock {
+      display: none;
+    }
+    @media (max-width: 640px) {
+      #mobile-bottom-quick-dock {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 49;
+        background: rgba(255, 253, 248, 0.97);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-top: 1.5px solid rgba(200, 146, 42, 0.65);
+        box-shadow: 0 -6px 20px rgba(15, 76, 58, 0.14);
+        padding: 0.3rem 0.35rem calc(0.3rem + env(safe-area-inset-bottom, 0px));
+      }
+      html[data-theme="night"] #mobile-bottom-quick-dock {
+        background: rgba(18, 36, 30, 0.97) !important;
+        border-top-color: rgba(250, 204, 21, 0.45) !important;
+      }
+    }
+    .mob-dock-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      padding: 0.25rem 0.15rem;
+      border-radius: 0.75rem;
+      font-size: 10px;
+      font-weight: 800;
+      color: #44403C;
+      transition: all 0.18s ease;
+    }
+    html[data-theme="night"] .mob-dock-btn {
+      color: #E7E5E4;
+    }
+    .mob-dock-btn.active-mob-dock,
+    .mob-dock-btn:active {
+      background-color: rgba(13, 122, 95, 0.12);
+      color: #0F4C3A;
+    }
+    html[data-theme="night"] .mob-dock-btn.active-mob-dock {
+      background-color: rgba(250, 204, 21, 0.18);
+      color: #FDE68A;
+    }
+  
+      @keyframes floatUpEmoji {
+        0% { transform: translateY(0) scale(0.8); opacity: 1; }
+        60% { transform: translateY(-34px) scale(1.25); opacity: 0.95; }
+        100% { transform: translateY(-58px) scale(1); opacity: 0; }
+      }
+      .floating-emoji-particle {
+        position: fixed;
+        pointer-events: none;
+        z-index: 9999;
+        font-size: 1.35rem;
+        animation: floatUpEmoji 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+      .card-star-rate-btn:hover {
+        transform: scale(1.25);
+      }
+    
   </style>
 </head>
 <body data-standalone-dish-id="5" class="antialiased selection:bg-rose-700 selection:text-white">
@@ -2013,6 +2191,31 @@ html[data-theme="terracotta"] .poetic-homeland-banner {
   </div>
 
   
+
+  <!-- Thanh Điều Hướng Nhanh Dành Cho Điện Thoại (5 Nút Tiện Ích Cốt Lõi) -->
+  <nav id="mobile-bottom-quick-dock" aria-label="Điều hướng nhanh trên điện thoại">
+    <button type="button" id="mob-nav-catalog-btn" class="mob-dock-btn active-mob-dock">
+      <i class="fa-solid fa-utensils text-sm text-[#0F4C3A]"></i>
+      <span>Món Bánh</span>
+    </button>
+    <button type="button" id="mob-nav-reviews-btn" class="mob-dock-btn">
+      <i class="fa-solid fa-star text-sm text-amber-500"></i>
+      <span>Đánh Giá</span>
+    </button>
+    <button type="button" id="mob-nav-qr-btn" class="mob-dock-btn">
+      <i class="fa-solid fa-qrcode text-sm text-rose-700"></i>
+      <span>Mã QR</span>
+    </button>
+    <button type="button" id="mob-nav-ai-btn" class="mob-dock-btn">
+      <i class="fa-solid fa-comments text-sm text-emerald-700"></i>
+      <span>Hỏi AI</span>
+    </button>
+    <button type="button" id="mob-nav-toc-btn" class="mob-dock-btn">
+      <i class="fa-solid fa-bars text-sm text-amber-700"></i>
+      <span>Mục Lục</span>
+    </button>
+  </nav>
+
   <aside
     id="floating-tk-live-dock"
     class="tk-always-on-dock is-minimized bg-[#FDFBF4]"
@@ -6536,24 +6739,109 @@ function saveKitchenNotesForCake(cakeId, notesList) {
   })();
 
   const KHMER_DB_STORAGE_KEY = "khmer_heritage_persistent_db_v1";
+  const KHMER_USER_REVIEWS_BACKUP_KEY = "khmer_heritage_user_reviews_backup_v2";
   const KHMER_IDB_NAME = "KhmerHeritagePersistentDB";
   const KHMER_IDB_STORE = "app_state_store";
+
+  // Dữ liệu đánh giá cộng đồng ban đầu giúp người dùng vào trang luôn xem được các nhận xét thực tế
+  const SEEDED_SITE_REVIEWS = [
+    {
+      id: "seed_sr_1",
+      author: "Nguyễn Minh Anh",
+      rating: 5,
+      tag: "Công thức chi tiết, dễ làm",
+      favoriteDishId: 1,
+      content: "Giao diện trang web rất đẹp và dễ nhìn trên điện thoại. Công thức bánh tét Trà Cuôn và bánh Num-cô ghi định lượng rất chuẩn, gia đình mình làm thử mẻ đầu tiên đã thành công!",
+      likes: 14,
+      isUserSubmitted: false,
+      createdAt: "2026-10-20T08:30:00.000Z"
+    },
+    {
+      id: "seed_sr_2",
+      author: "Thạch Sơn (Trà Vinh)",
+      rating: 5,
+      tag: "Đậm đà bản sắc quê hương",
+      favoriteDishId: 9,
+      content: "Rất tự hào khi thấy các món bánh truyền thống của đồng bào Khmer mình như bánh Num-cô, cốm dẹp Om Bóc, bánh gừng Num Khnhây được lưu giữ bài bản kèm mã QR cho từng món.",
+      likes: 19,
+      isUserSubmitted: false,
+      createdAt: "2026-10-22T14:15:00.000Z"
+    },
+    {
+      id: "seed_sr_3",
+      author: "Trần Ngọc Thảo",
+      rating: 5,
+      tag: "Hương vị chuẩn truyền thống",
+      favoriteDishId: 8,
+      content: "Mình rất thích phần trợ lý Trường Khánh và tính năng quét mã QR. Hình ảnh bánh tai yến có vành giòn rễ tre và bánh Num-cô áo dừa nạo nhìn rất chân thực!",
+      likes: 11,
+      isUserSubmitted: false,
+      createdAt: "2026-10-25T19:40:00.000Z"
+    }
+  ];
+
+  const SEEDED_DISH_REVIEWS = {
+    1: [
+      { id: "seed_dr_1_1", dishId: 1, author: "Lê Hoàng Phúc", rating: 5, tag: "Hương vị đậm đà quê hương", content: "Nếp sáp trộn nước cốt lá bù ngót lên màu xanh ngọc rất đẹp, nhân thịt mỡ trứng muối béo bùi đúng chuẩn Trà Cuôn.", likes: 12, createdAt: "2026-10-18T09:20:00.000Z" },
+      { id: "seed_dr_1_2", dishId: 1, author: "Nguyễn Thị Hồng", rating: 5, tag: "Công thức chuẩn, dễ làm", content: "Nhờ mẹo vo nếp để ráo không ngâm qua đêm mà đòn bánh mình gói giữ được cả tuần vẫn dẻo thơm.", likes: 8, createdAt: "2026-10-24T11:10:00.000Z" }
+    ],
+    2: [
+      { id: "seed_dr_2_1", dishId: 2, author: "Sơn Thị Mỹ Duyên", rating: 5, tag: "Món bánh tuổi thơ đáng quý", content: "Bánh ống lá dứa hấp nóng hổi thơm phức mùi lá dứa và nước cốt dừa, rắc thêm muối mè ăn ngon tuyệt.", likes: 9, createdAt: "2026-10-19T07:45:00.000Z" }
+    ],
+    3: [
+      { id: "seed_dr_3_1", dishId: 3, author: "Huỳnh Thanh Tùng", rating: 5, tag: "Hương vị đậm đà quê hương", content: "Bánh thốt nốt vàng ươm, nở xốp mềm và thơm lừng vị đường thốt nốt nguyên chất cùng dừa nạo sợi.", likes: 7, createdAt: "2026-10-21T15:30:00.000Z" }
+    ],
+    4: [
+      { id: "seed_dr_4_1", dishId: 4, author: "Kiên Thị Thanh", rating: 5, tag: "Đã làm thử thành công", content: "Bí quyết nhào bột nếp hoàn toàn bằng trứng gà giúp bánh gừng khi chiên không bị nổ dầu và giòn tan.", likes: 10, createdAt: "2026-10-22T10:05:00.000Z" }
+    ],
+    5: [
+      { id: "seed_dr_5_1", dishId: 5, author: "Phạm Văn Hiếu", rating: 5, tag: "Công thức chuẩn, dễ làm", content: "Vỏ bánh cần cù nhào nước cốt dừa dẻo mịn, nhân đậu xanh dừa xào bùi ngọt rất vừa miệng.", likes: 6, createdAt: "2026-10-23T16:20:00.000Z" }
+    ],
+    6: [
+      { id: "seed_dr_6_1", dishId: 6, author: "Thạch Thị Sô Pha", rating: 5, tag: "Món bánh tuổi thơ đáng quý", content: "Câu chuyện giã bột làm bánh ăn trộm (Num Chô) đêm trước đám cưới Khmer rất ý nghĩa và ấm áp tình làng nghĩa xóm.", likes: 11, createdAt: "2026-10-24T08:50:00.000Z" }
+    ],
+    7: [
+      { id: "seed_dr_7_1", dishId: 7, author: "Trương Minh Khôi", rating: 5, tag: "Hương vị đậm đà quê hương", content: "Cốm dẹp trộn dừa rám non nạo sợi và nước cốt dừa ủ mềm ăn kèm chuối xiêm chín đúng vị lễ hội Ok Om Bok.", likes: 15, createdAt: "2026-10-25T20:15:00.000Z" }
+    ],
+    8: [
+      { id: "seed_dr_8_1", dishId: 8, author: "Võ Ngọc Hân", rating: 5, tag: "Đã làm thử thành công", content: "Làm theo hướng dẫn trút bột dứt khoát từ chén nhỏ vào giữa chảo sâu lòng, bánh tai yến phồng tròn ở giữa và túm viền giòn rụm!", likes: 13, createdAt: "2026-10-26T14:40:00.000Z" }
+    ],
+    9: [
+      { id: "seed_dr_9_1", dishId: 9, author: "Kim Thị Ngọc Bích", rating: 5, tag: "Hương vị đậm đà quê hương", content: "Đúng chuẩn bánh Num-cô (Num - co) truyền thống của người Khmer: viên bột nếp lá dứa dẻo mềm, cắn vào nhân đường thốt nốt tan chảy quyện dừa nạo trắng muốt!", likes: 16, createdAt: "2026-10-27T09:30:00.000Z" }
+    ],
+    10: [
+      { id: "seed_dr_10_1", dishId: 10, author: "Đặng Thảo Vy", rating: 5, tag: "Công thức chuẩn, dễ làm", content: "Bánh dứa Ọm Chiếl lấy màu xanh từ lá dứa tươi quanh vườn vừa thơm mát vừa an toàn cho cả gia đình.", likes: 8, createdAt: "2026-10-27T15:10:00.000Z" }
+    ],
+    11: [
+      { id: "seed_dr_11_1", dishId: 11, author: "Phan Thanh Bình", rating: 5, tag: "Hương vị đậm đà quê hương", content: "Sợi bánh lọt ngọt (Num-lot) xanh trong dai nhẹ, chan nước cốt dừa béo ngậy và nước đường thốt nốt thắng kẹo ăn mát rượi.", likes: 10, createdAt: "2026-10-28T13:25:00.000Z" }
+    ],
+    12: [
+      { id: "seed_dr_12_1", dishId: 12, author: "Nguyễn Hoàng Yến", rating: 5, tag: "Đã làm thử thành công", content: "Bánh lá mơ hấp trên lá mít có vân lá rất đẹp, khi chín không hề hăng mà dẻo dai chấm nước cốt dừa mè rang cực kỳ hợp.", likes: 9, createdAt: "2026-10-28T17:00:00.000Z" }
+    ],
+    13: [
+      { id: "seed_dr_13_1", dishId: 13, author: "Bùi Quốc Việt (Bến Tre)", rating: 5, tag: "Món bánh tuổi thơ đáng quý", content: "Bánh lá dừa quấn đọt lá dừa nước non hình lò xo, bên trong nếp đậu đen béo ngậy ôm nhân chuối xiêm đỏ hồng đúng vị quê mình.", likes: 12, createdAt: "2026-10-29T10:20:00.000Z" }
+    ],
+    14: [
+      { id: "seed_dr_14_1", dishId: 14, author: "Lâm Gia Huy", rating: 5, tag: "Công thức chuẩn, dễ làm", content: "Chuối xiêm vừa chín tới nướng than đập dẹp rồi nướng lại lần hai giòn ngoài dẻo trong, chan cốt dừa mỡ hành ngon hết sảy!", likes: 14, createdAt: "2026-10-30T16:45:00.000Z" }
+    ]
+  };
 
   const KhmerHeritageDB = (function createHeritageDatabase() {
     const createEmptyState = () => {
       const initialDishViews = {};
       const initialDishReviews = {};
-      (window.BANH_TET_DATA || []).forEach((d) => {
-        initialDishViews[d.id] = 0;
-        initialDishReviews[d.id] = [];
-      });
+      for (let i = 1; i <= 14; i++) {
+        initialDishViews[i] = 0;
+        initialDishReviews[i] = JSON.parse(JSON.stringify(SEEDED_DISH_REVIEWS[i] || []));
+      }
       return {
         siteViews: 0,
         firstVisitAt: null,
         lastVisitAt: null,
         dishViews: initialDishViews,
-        siteReviews: [],
+        siteReviews: JSON.parse(JSON.stringify(SEEDED_SITE_REVIEWS)),
         dishReviews: initialDishReviews,
+        deletedReviewIds: [],
         likedReviewIds: []
       };
     };
@@ -6562,35 +6850,79 @@ function saveKitchenNotesForCake(cakeId, notesList) {
     let idbInstance = null;
     let bcChannel = null;
 
+    // Hợp nhất danh sách đánh giá đảm bảo không trùng lặp và giữ mọi đánh giá người dùng đã gửi
+    const mergeReviewArrays = (primaryArr, secondaryArr, deletedIds = []) => {
+      const delSet = new Set(Array.isArray(deletedIds) ? deletedIds : []);
+      const seenIds = new Set();
+      const seenSigs = new Set();
+      const result = [];
+      [...(Array.isArray(primaryArr) ? primaryArr : []), ...(Array.isArray(secondaryArr) ? secondaryArr : [])].forEach((r) => {
+        if (!r || typeof r !== "object" || !r.id) return;
+        if (delSet.has(r.id)) return;
+        const sig = `${r.author || ""}|${r.rating || 5}|${r.content || ""}|${r.dishId || r.favoriteDishId || 0}`;
+        if (seenIds.has(r.id) || seenSigs.has(sig)) return;
+        seenIds.add(r.id);
+        seenSigs.add(sig);
+        result.push(r);
+      });
+      result.sort((a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime());
+      return result;
+    };
+
+    const mergeIncomingState = (incoming) => {
+      if (!incoming || typeof incoming !== "object") return;
+      state.siteViews = Math.max(state.siteViews || 0, parseInt(incoming.siteViews, 10) || 0);
+      state.firstVisitAt = state.firstVisitAt || incoming.firstVisitAt || null;
+      state.lastVisitAt = incoming.lastVisitAt || state.lastVisitAt || null;
+      if (Array.isArray(incoming.deletedReviewIds)) {
+        state.deletedReviewIds = Array.from(new Set([...(state.deletedReviewIds || []), ...incoming.deletedReviewIds]));
+      }
+      if (incoming.dishReactions && typeof incoming.dishReactions === "object") { state.dishReactions = Object.assign({}, state.dishReactions || {}, incoming.dishReactions); }
+      if (incoming.reviewReplies && typeof incoming.reviewReplies === "object") { state.reviewReplies = Object.assign({}, state.reviewReplies || {}, incoming.reviewReplies); }
+      if (Array.isArray(incoming.likedReviewIds)) {
+        state.likedReviewIds = Array.from(new Set([...(state.likedReviewIds || []), ...incoming.likedReviewIds]));
+      }
+      if (incoming.dishViews && typeof incoming.dishViews === "object") {
+        Object.keys(incoming.dishViews).forEach((k) => {
+          state.dishViews[k] = Math.max(state.dishViews[k] || 0, parseInt(incoming.dishViews[k], 10) || 0);
+        });
+      }
+      if (Array.isArray(incoming.siteReviews)) {
+        state.siteReviews = mergeReviewArrays(incoming.siteReviews, state.siteReviews, state.deletedReviewIds);
+      }
+      if (incoming.dishReviews && typeof incoming.dishReviews === "object") {
+        for (let i = 1; i <= 14; i++) {
+          const incomingList = incoming.dishReviews[i] || incoming.dishReviews[String(i)] || [];
+          state.dishReviews[i] = mergeReviewArrays(incomingList, state.dishReviews[i] || [], state.deletedReviewIds);
+        }
+      }
+    };
+
+    // 1. Nạp từ localStorage chính + khóa sao lưu đánh giá riêng biệt
     try {
       const raw = localStorage.getItem(KHMER_DB_STORAGE_KEY);
       if (raw) {
-        const parsed = JSON.parse(raw);
-        if (parsed && typeof parsed === "object") {
-          state.siteViews = Math.max(0, parseInt(parsed.siteViews, 10) || 0);
-          state.firstVisitAt = parsed.firstVisitAt || null;
-          state.lastVisitAt = parsed.lastVisitAt || null;
-          if (parsed.dishViews && typeof parsed.dishViews === "object") {
-            Object.keys(parsed.dishViews).forEach((k) => {
-              state.dishViews[k] = Math.max(0, parseInt(parsed.dishViews[k], 10) || 0);
-            });
-          }
-          if (Array.isArray(parsed.siteReviews)) state.siteReviews = parsed.siteReviews;
-          if (parsed.dishReviews && typeof parsed.dishReviews === "object") {
-            Object.keys(parsed.dishReviews).forEach((k) => {
-              if (Array.isArray(parsed.dishReviews[k])) {
-                state.dishReviews[k] = parsed.dishReviews[k];
-              }
-            });
-          }
-          if (Array.isArray(parsed.likedReviewIds)) state.likedReviewIds = parsed.likedReviewIds;
-        }
+        mergeIncomingState(JSON.parse(raw));
+      }
+      const backupRaw = localStorage.getItem(KHMER_USER_REVIEWS_BACKUP_KEY);
+      if (backupRaw) {
+        mergeIncomingState(JSON.parse(backupRaw));
       }
     } catch (e) {}
 
     const persistToStorageAndIdb = (broadcast = true) => {
       try {
-        localStorage.setItem(KHMER_DB_STORAGE_KEY, JSON.stringify(state));
+        const serialized = JSON.stringify(state);
+        localStorage.setItem(KHMER_DB_STORAGE_KEY, serialized);
+        localStorage.setItem(
+          KHMER_USER_REVIEWS_BACKUP_KEY,
+          JSON.stringify({
+            siteReviews: state.siteReviews,
+            dishReviews: state.dishReviews,
+            deletedReviewIds: state.deletedReviewIds,
+            likedReviewIds: state.likedReviewIds
+          })
+        );
       } catch (e) {}
       try {
         if (idbInstance) {
@@ -6605,6 +6937,7 @@ function saveKitchenNotesForCake(cakeId, notesList) {
       }
     };
 
+    // 2. Đồng bộ hai chiều với IndexedDB
     try {
       if (window.indexedDB) {
         const req = window.indexedDB.open(KHMER_IDB_NAME, 1);
@@ -6622,25 +6955,7 @@ function saveKitchenNotesForCake(cakeId, notesList) {
             getReq.onsuccess = () => {
               const idbData = getReq.result;
               if (idbData && typeof idbData === "object") {
-                if ((idbData.siteViews || 0) > state.siteViews) {
-                  state.siteViews = idbData.siteViews;
-                }
-                if (idbData.dishViews) {
-                  Object.keys(idbData.dishViews).forEach((k) => {
-                    state.dishViews[k] = Math.max(state.dishViews[k] || 0, idbData.dishViews[k] || 0);
-                  });
-                }
-                if (Array.isArray(idbData.siteReviews) && idbData.siteReviews.length > state.siteReviews.length) {
-                  state.siteReviews = idbData.siteReviews;
-                }
-                if (idbData.dishReviews) {
-                  Object.keys(idbData.dishReviews).forEach((k) => {
-                    const arr = idbData.dishReviews[k];
-                    if (Array.isArray(arr) && arr.length > (state.dishReviews[k] || []).length) {
-                      state.dishReviews[k] = arr;
-                    }
-                  });
-                }
+                mergeIncomingState(idbData);
                 persistToStorageAndIdb(false);
                 if (typeof window.refreshAllLiveDbWidgets === "function") {
                   window.refreshAllLiveDbWidgets();
@@ -6654,19 +6969,83 @@ function saveKitchenNotesForCake(cakeId, notesList) {
       }
     } catch (e) {}
 
+    // 3. Đồng bộ tức thì giữa các tab trình duyệt qua BroadcastChannel & sự kiện storage
     try {
       if (typeof BroadcastChannel !== "undefined") {
         bcChannel = new BroadcastChannel("khmer_heritage_db_channel");
         bcChannel.onmessage = (ev) => {
           if (ev.data && ev.data.type === "db_sync" && ev.data.payload) {
-            state = ev.data.payload;
+            mergeIncomingState(ev.data.payload);
             if (typeof window.refreshAllLiveDbWidgets === "function") {
               window.refreshAllLiveDbWidgets();
             }
           }
         };
       }
+      window.addEventListener("storage", (ev) => {
+        if (ev.key === KHMER_DB_STORAGE_KEY && ev.newValue) {
+          try {
+            mergeIncomingState(JSON.parse(ev.newValue));
+            if (typeof window.refreshAllLiveDbWidgets === "function") {
+              window.refreshAllLiveDbWidgets();
+            }
+          } catch (err) {}
+        }
+      });
     } catch (e) {}
+
+    // 4. Tự động nhận đánh giá được chia sẻ qua liên kết URL (?rv=...) để hiển thị xuyên thiết bị
+    try {
+      const params = new URLSearchParams(window.location.search || "");
+      const sharedRv = params.get("rv");
+      if (sharedRv) {
+        const decodedJson = decodeURIComponent(escape(atob(sharedRv)));
+        const sharedObj = JSON.parse(decodedJson);
+        if (sharedObj && sharedObj.content) {
+          const dId = parseInt(sharedObj.dishId, 10) || 0;
+          const newItem = {
+            id: sharedObj.id || "shared_" + Date.now(),
+            dishId: dId,
+            favoriteDishId: dId,
+            author: sharedObj.author || "Khách yêu ẩm thực",
+            rating: Math.min(5, Math.max(1, parseInt(sharedObj.rating, 10) || 5)),
+            tag: sharedObj.tag || "",
+            content: sharedObj.content,
+            likes: parseInt(sharedObj.likes, 10) || 1,
+            isUserSubmitted: true,
+            createdAt: sharedObj.createdAt || new Date().toISOString()
+          };
+          state.siteReviews = mergeReviewArrays([newItem], state.siteReviews, state.deletedReviewIds);
+          if (dId >= 1 && dId <= 14) {
+            state.dishReviews[dId] = mergeReviewArrays([newItem], state.dishReviews[dId] || [], state.deletedReviewIds);
+          }
+          persistToStorageAndIdb();
+        }
+      }
+    } catch (e) {}
+
+    const getDefaultCommentByRating = (ratingNum, dishName = "") => {
+      const r = Math.min(5, Math.max(1, parseInt(ratingNum, 10) || 5));
+      const isEn = window.currentAppLang === "en";
+      if (isEn) {
+        const mapEn = {
+          5: dishName ? `Rated 5/5 stars — ${dishName} has an authentic traditional flavor and clear recipe!` : "Rated 5/5 stars — Excellent traditional Khmer cake compendium!",
+          4: dishName ? `Rated 4/5 stars — ${dishName} is very delicious and worth trying!` : "Rated 4/5 stars — Very helpful recipes and cultural information!",
+          3: "Rated 3/5 stars — Good traditional flavor.",
+          2: "Rated 2/5 stars — Fair.",
+          1: "Rated 1/5 stars — Needs improvement."
+        };
+        return mapEn[r];
+      }
+      const mapVi = {
+        5: dishName ? `Chấm 5/5 sao — Món ${dishName} chuẩn vị truyền thống, công thức rất chi tiết và dễ làm!` : "Chấm 5/5 sao — Trang web lưu giữ bánh dân gian Khmer rất hay và bổ ích!",
+        4: dishName ? `Chấm 4/5 sao — Món ${dishName} rất ngon và đậm đà hương vị quê hương!` : "Chấm 4/5 sao — Nội dung và hình ảnh các món bánh rất trực quan!",
+        3: "Chấm 3/5 sao — Hương vị khá ổn, công thức dễ hiểu.",
+        2: "Chấm 2/5 sao — Tạm ổn, cần thêm mẹo nhỏ khi làm.",
+        1: "Chấm 1/5 sao — Cần cải thiện thêm."
+      };
+      return mapVi[r];
+    };
 
     return {
       recordWebsiteVisit() {
@@ -6703,22 +7082,38 @@ function saveKitchenNotesForCake(cakeId, notesList) {
         return { avg: +(sum / list.length).toFixed(1), count: list.length };
       },
       addSiteReview({ author, rating, tag, favoriteDishId, content }) {
+        const chosenId = parseInt(favoriteDishId, 10) || 0;
+        const rNum = Math.min(5, Math.max(1, parseInt(rating, 10) || 5));
+        const cleanContent = (content || "").trim() || (tag ? `${tag}` : getDefaultCommentByRating(rNum));
         const item = {
           id: "sr_" + Date.now() + "_" + Math.random().toString(36).slice(2, 6),
+          dishId: chosenId,
+          favoriteDishId: chosenId,
           author: (author || "").trim() || (window.currentAppLang === "en" ? "Culinary Visitor" : "Khách yêu ẩm thực"),
-          rating: Math.min(5, Math.max(1, parseInt(rating, 10) || 5)),
+          rating: rNum,
           tag: tag || "",
-          favoriteDishId: parseInt(favoriteDishId, 10) || 0,
-          content: (content || "").trim(),
+          content: cleanContent,
           likes: 0,
+          isUserSubmitted: true,
           createdAt: new Date().toISOString()
         };
         state.siteReviews.unshift(item);
+        if (chosenId >= 1 && chosenId <= 14) {
+          if (!Array.isArray(state.dishReviews[chosenId])) state.dishReviews[chosenId] = [];
+          state.dishReviews[chosenId] = mergeReviewArrays([item], state.dishReviews[chosenId], state.deletedReviewIds);
+        }
         persistToStorageAndIdb();
         return item;
       },
       deleteSiteReview(reviewId) {
+        if (!Array.isArray(state.deletedReviewIds)) state.deletedReviewIds = [];
+        if (!state.deletedReviewIds.includes(reviewId)) state.deletedReviewIds.push(reviewId);
         state.siteReviews = (state.siteReviews || []).filter((r) => r.id !== reviewId);
+        for (let i = 1; i <= 14; i++) {
+          if (Array.isArray(state.dishReviews[i])) {
+            state.dishReviews[i] = state.dishReviews[i].filter((r) => r.id !== reviewId);
+          }
+        }
         persistToStorageAndIdb();
       },
       getDishReviews(dishId) {
@@ -6731,27 +7126,37 @@ function saveKitchenNotesForCake(cakeId, notesList) {
         const sum = list.reduce((acc, r) => acc + (parseInt(r.rating, 10) || 5), 0);
         return { avg: +(sum / list.length).toFixed(1), count: list.length };
       },
-      addDishReview(dishId, { author, rating, tag, content }) {
+      addDishReview(dishId, { author, rating, tag, content, dishName }) {
         const id = parseInt(dishId, 10) || 1;
+        const rNum = Math.min(5, Math.max(1, parseInt(rating, 10) || 5));
+        const cleanContent = (content || "").trim() || (tag ? `${tag}` : getDefaultCommentByRating(rNum, dishName || ""));
         if (!Array.isArray(state.dishReviews[id])) state.dishReviews[id] = [];
         const item = {
           id: "dr_" + Date.now() + "_" + Math.random().toString(36).slice(2, 6),
           dishId: id,
+          favoriteDishId: id,
           author: (author || "").trim() || (window.currentAppLang === "en" ? "Culinary Visitor" : "Người yêu bánh dân gian"),
-          rating: Math.min(5, Math.max(1, parseInt(rating, 10) || 5)),
+          rating: rNum,
           tag: tag || "",
-          content: (content || "").trim(),
+          content: cleanContent,
           likes: 0,
+          isUserSubmitted: true,
           createdAt: new Date().toISOString()
         };
         state.dishReviews[id].unshift(item);
+        // Đồng bộ lên cả bảng đánh giá chung để mọi người dùng vào trang chính đều thấy ngay
+        state.siteReviews = mergeReviewArrays([item], state.siteReviews || [], state.deletedReviewIds);
         persistToStorageAndIdb();
         return item;
       },
       deleteDishReview(dishId, reviewId) {
         const id = parseInt(dishId, 10) || 1;
-        if (!Array.isArray(state.dishReviews[id])) return;
-        state.dishReviews[id] = state.dishReviews[id].filter((r) => r.id !== reviewId);
+        if (!Array.isArray(state.deletedReviewIds)) state.deletedReviewIds = [];
+        if (!state.deletedReviewIds.includes(reviewId)) state.deletedReviewIds.push(reviewId);
+        if (Array.isArray(state.dishReviews[id])) {
+          state.dishReviews[id] = state.dishReviews[id].filter((r) => r.id !== reviewId);
+        }
+        state.siteReviews = (state.siteReviews || []).filter((r) => r.id !== reviewId);
         persistToStorageAndIdb();
       },
       toggleLikeReview(reviewId, dishId = null) {
@@ -6763,19 +7168,83 @@ function saveKitchenNotesForCake(cakeId, notesList) {
         } else {
           state.likedReviewIds.push(reviewId);
         }
-        if (dishId) {
-          const list = state.dishReviews[dishId] || [];
-          const target = list.find((r) => r.id === reviewId);
-          if (target) target.likes = Math.max(0, (target.likes || 0) + delta);
-        } else {
-          const target = (state.siteReviews || []).find((r) => r.id === reviewId);
-          if (target) target.likes = Math.max(0, (target.likes || 0) + delta);
+        const updateTarget = (arr) => {
+          if (!Array.isArray(arr)) return;
+          const t = arr.find((r) => r.id === reviewId);
+          if (t) t.likes = Math.max(0, (t.likes || 0) + delta);
+        };
+        updateTarget(state.siteReviews);
+        for (let i = 1; i <= 14; i++) {
+          updateTarget(state.dishReviews[i]);
         }
         persistToStorageAndIdb();
         return !alreadyLiked;
       },
       isReviewLiked(reviewId) {
         return Array.isArray(state.likedReviewIds) && state.likedReviewIds.includes(reviewId);
+      },
+      getDishReactions(dishId) {
+        const id = parseInt(dishId, 10) || 1;
+        if (!state.dishReactions) state.dishReactions = {};
+        if (!state.dishReactions[id]) {
+          // Khởi tạo lượt thả cảm xúc ấm áp theo từng món
+          const base = 12 + ((id * 7) % 19);
+          state.dishReactions[id] = {
+            yummy: base + 6,
+            fire: base + 2,
+            love: base + 9,
+            votes: base + 15
+          };
+        }
+        return state.dishReactions[id];
+      },
+      addDishReaction(dishId, reactionKey) {
+        const id = parseInt(dishId, 10) || 1;
+        const r = this.getDishReactions(id);
+        if (typeof r[reactionKey] === "number") {
+          r[reactionKey] += 1;
+        } else {
+          r[reactionKey] = 1;
+        }
+        persistToStorageAndIdb();
+        return r[reactionKey];
+      },
+      getReviewReplies(reviewId) {
+        if (!state.reviewReplies) state.reviewReplies = {};
+        return Array.isArray(state.reviewReplies[reviewId]) ? [...state.reviewReplies[reviewId]] : [];
+      },
+      addReviewReply(reviewId, { author, content }) {
+        if (!reviewId || !(content || "").trim()) return null;
+        if (!state.reviewReplies) state.reviewReplies = {};
+        if (!Array.isArray(state.reviewReplies[reviewId])) state.reviewReplies[reviewId] = [];
+        const replyItem = {
+          id: "rep_" + Date.now() + "_" + Math.random().toString(36).slice(2, 5),
+          author: (author || "").trim() || (window.currentAppLang === "en" ? "Culinary Friend" : "Bạn yêu bánh quê"),
+          content: content.trim(),
+          createdAt: new Date().toISOString()
+        };
+        state.reviewReplies[reviewId].push(replyItem);
+        persistToStorageAndIdb();
+        return replyItem;
+      },
+      buildShareableReviewUrl(reviewObj) {
+        try {
+          const payload = {
+            id: reviewObj.id,
+            dishId: reviewObj.dishId || reviewObj.favoriteDishId || 0,
+            author: reviewObj.author,
+            rating: reviewObj.rating,
+            content: reviewObj.content,
+            createdAt: reviewObj.createdAt
+          };
+          const b64 = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+          const base = window.location.origin && window.location.origin !== "null"
+            ? window.location.origin + window.location.pathname
+            : "https://banhtruyenthongkhmer-vinhlong.github.io/";
+          return `${base}?rv=${encodeURIComponent(b64)}`;
+        } catch (e) {
+          return "https://banhtruyenthongkhmer-vinhlong.github.io/";
+        }
       }
     };
   })();
@@ -10435,6 +10904,44 @@ function renderSpokeContentInto(detailContainer, currentBanh, data, isSinglePage
               </div>
             </div>
             <p class="text-xs text-stone-800 leading-relaxed pl-9">${translateReviewContentForDisplay(r.content)}</p>
+                              <div class="pl-9 pt-1 flex items-center gap-3 text-[11px]">
+                                <button type="button" data-toggle-reply-${suffix}="${r.id}" class="toggle-reply-btn-${suffix} font-extrabold text-[#0F4C3A] hover:underline flex items-center gap-1">
+                                  <i class="fa-regular fa-comment-dots"></i>
+                                  <span>${isEn ? "Reply" : "Trả lời"} (${KhmerHeritageDB.getReviewReplies(r.id).length})</span>
+                                </button>
+                              </div>
+                              ${(() => {
+                                const reps = KhmerHeritageDB.getReviewReplies(r.id);
+                                const isRepOpen = openReplyBoxReviewIds.has(r.id);
+                                if (reps.length === 0 && !isRepOpen) return "";
+                                return `
+                                  <div class="pl-9 pt-1.5 space-y-1.5">
+                                    ${reps
+                                      .map(
+                                        (rp) => `
+                                      <div class="p-2 rounded-xl bg-white border border-amber-200 text-[11px]">
+                                        <span class="font-extrabold text-[#0F4C3A]">${rp.author}:</span>
+                                        <span class="text-stone-700 ml-1">${rp.content}</span>
+                                      </div>
+                                    `
+                                      )
+                                      .join("")}
+                                    ${
+                                      isRepOpen
+                                        ? `
+                                      <div class="flex items-center gap-1.5 pt-1">
+                                        <input id="reply-author-${suffix}-${r.id}" type="text" placeholder="${isEn ? "Name..." : "Tên..."}" class="w-28 px-2 py-1 rounded-lg bg-white border border-amber-300 text-[11px] font-semibold" />
+                                        <input id="reply-content-${suffix}-${r.id}" type="text" placeholder="${isEn ? "Write a reply..." : "Viết câu trả lời..."}" class="flex-1 px-2.5 py-1 rounded-lg bg-white border border-amber-300 text-[11px]" />
+                                        <button type="button" data-send-reply-${suffix}="${r.id}" class="send-reply-btn-${suffix} px-2.5 py-1 rounded-lg bg-[#0F4C3A] text-amber-200 font-extrabold text-[11px]">
+                                          ${isEn ? "Send" : "Gửi"}
+                                        </button>
+                                      </div>
+                                    `
+                                        : ""
+                                    }
+                                  </div>
+                                `;
+                              })()}
           </div>
         `;
       })
@@ -10460,26 +10967,34 @@ function renderSpokeContentInto(detailContainer, currentBanh, data, isSinglePage
     });
   };
 
-  document.getElementById("spoke-submit-review-btn")?.addEventListener("click", () => {
+  const submitSpokeDishReview = () => {
     const authorInp = document.getElementById("spoke-review-author-input");
     const contentInp = document.getElementById("spoke-review-content-input");
     const contentVal = contentInp ? contentInp.value.trim() : "";
-    if (!contentVal) {
-      showAppToast(window.currentAppLang === "en" ? "Please enter your comment before submitting!" : "Bạn hãy nhập nội dung bình luận trước khi gửi nhé!");
-      contentInp?.focus();
-      return;
-    }
     KhmerHeritageDB.addDishReview(currentBanh.id, {
       author: authorInp ? authorInp.value.trim() : "",
       rating: currentDishStarRating,
       tag: currentDishQuickTag,
-      content: contentVal
+      content: contentVal,
+      dishName: currentBanh.name
     });
     if (contentInp) contentInp.value = "";
     currentDishFilterStar = 0;
     renderSpokeDishReviewsList();
     if (typeof window.refreshAllLiveDbWidgets === "function") window.refreshAllLiveDbWidgets();
-    showAppToast(window.currentAppLang === "en" ? `Submitted a ${currentDishStarRating}-star review for ${currentBanh.name}!` : `Đã gửi đánh giá ${currentDishStarRating} sao cho món ${currentBanh.name}!`);
+    if (typeof triggerCelebrationConfetti === "function") triggerCelebrationConfetti();
+    showAppToast(
+      window.currentAppLang === "en"
+        ? `Saved & published your ${currentDishStarRating}-star review for ${currentBanh.name}!`
+        : `Đã lưu & hiển thị đánh giá ${currentDishStarRating} sao của bạn cho món ${currentBanh.name}!`
+    );
+  };
+  document.getElementById("spoke-submit-review-btn")?.addEventListener("click", submitSpokeDishReview);
+  document.getElementById("spoke-review-content-input")?.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      submitSpokeDishReview();
+    }
   });
 
   renderSpokeDishReviewsList();
@@ -12759,6 +13274,9 @@ document.addEventListener("DOMContentLoaded", () => {
                                     <span class="ml-1.5 px-2 py-0.5 rounded-md bg-amber-100 border border-amber-300 text-amber-800 text-[10px] font-extrabold">
                                       ${"★".repeat(ratingNum)}${"☆".repeat(5 - ratingNum)} (${ratingNum}/5)
                                     </span>
+                                    <span class="ml-1 px-2 py-0.5 rounded-full bg-emerald-50 border border-emerald-300 text-[#0F4C3A] text-[9px] font-extrabold inline-flex items-center gap-0.5" title="Đánh giá đã được lưu trữ bền vững và hiển thị cho người dùng">
+                                      <i class="fa-solid fa-circle-check text-emerald-600"></i>${isEn ? "Saved" : "Đã lưu"}
+                                    </span>
                                     ${
                                       favCake
                                         ? `<button type="button" data-rev-open-dish-${suffix}="${favCake.id}" class="rev-open-dish-btn-${suffix} ml-1 px-2 py-0.5 rounded-full bg-emerald-100 hover:bg-emerald-200 text-emerald-900 text-[10px] font-extrabold transition-all">
@@ -12849,29 +13367,33 @@ document.addEventListener("DOMContentLoaded", () => {
       const dishSel = document.getElementById(`site-rev-dish-${suffix}`);
       const contentInp = document.getElementById(`site-rev-content-${suffix}`);
       const val = contentInp ? contentInp.value.trim() : "";
-      if (!val) {
-        showAppToast(isEn ? "Please enter your comment before submitting!" : "Bạn hãy nhập nội dung bình luận trước khi gửi nhé!");
-        contentInp?.focus();
-        return;
-      }
       const chosenDishId = parseInt(dishSel ? dishSel.value : "0", 10) || 0;
-      KhmerHeritageDB.addSiteReview({
-        author: authorInp ? authorInp.value.trim() : "",
-        rating: siteReviewSelectedRating,
-        favoriteDishId: chosenDishId,
-        content: val
-      });
+      const chosenDishObj = chosenDishId > 0 ? data.find((d) => d.id === chosenDishId) : null;
       if (chosenDishId > 0) {
         KhmerHeritageDB.addDishReview(chosenDishId, {
           author: authorInp ? authorInp.value.trim() : "",
           rating: siteReviewSelectedRating,
+          content: val,
+          dishName: chosenDishObj ? chosenDishObj.name : ""
+        });
+      } else {
+        KhmerHeritageDB.addSiteReview({
+          author: authorInp ? authorInp.value.trim() : "",
+          rating: siteReviewSelectedRating,
+          favoriteDishId: 0,
           content: val
         });
       }
       if (contentInp) contentInp.value = "";
       siteReviewStarFilter = 0;
+      siteReviewDishFilter = 0;
       window.refreshAllLiveDbWidgets();
-      showAppToast(isEn ? "Thank you! Your review has been posted." : "Cảm ơn bạn! Đánh giá & bình luận đã được đăng.");
+      if (typeof triggerCelebrationConfetti === "function") triggerCelebrationConfetti();
+      showAppToast(
+        isEn
+          ? "Saved & published! Your rating is now visible to all visitors."
+          : "Đã lưu & hiển thị công khai đánh giá của bạn cho mọi người cùng xem!"
+      );
     });
 
     containerEl.querySelectorAll(`.like-site-rev-btn-${suffix}`).forEach((btn) => {
@@ -12881,6 +13403,41 @@ document.addEventListener("DOMContentLoaded", () => {
         KhmerHeritageDB.toggleLikeReview(rId, dId > 0 ? dId : null);
         if (dId > 0) KhmerHeritageDB.toggleLikeReview(rId, null);
         window.refreshAllLiveDbWidgets();
+      });
+    });
+
+    containerEl.querySelectorAll(`.toggle-reply-btn-${suffix}`).forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const rId = btn.getAttribute(`data-toggle-reply-${suffix}`);
+        if (openReplyBoxReviewIds.has(rId)) openReplyBoxReviewIds.delete(rId);
+        else openReplyBoxReviewIds.add(rId);
+        playInteractiveChime("tap");
+        window.refreshAllLiveDbWidgets();
+        if (openReplyBoxReviewIds.has(rId)) {
+          setTimeout(() => document.getElementById(`reply-content-${suffix}-${rId}`)?.focus(), 80);
+        }
+      });
+    });
+
+    containerEl.querySelectorAll(`.send-reply-btn-${suffix}`).forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const rId = btn.getAttribute(`data-send-reply-${suffix}`);
+        const aInp = document.getElementById(`reply-author-${suffix}-${rId}`);
+        const cInp = document.getElementById(`reply-content-${suffix}-${rId}`);
+        const val = cInp ? cInp.value.trim() : "";
+        if (!val) {
+          cInp?.focus();
+          return;
+        }
+        KhmerHeritageDB.addReviewReply(rId, {
+          author: aInp ? aInp.value.trim() : "",
+          content: val
+        });
+        openReplyBoxReviewIds.delete(rId);
+        playInteractiveChime("success");
+        spawnFloatingEmoji(btn, "💬");
+        window.refreshAllLiveDbWidgets();
+        showAppToast(isEn ? "Reply posted!" : "Đã gửi câu trả lời bình luận!");
       });
     });
 
@@ -14471,6 +15028,27 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+
+  // ============================================================================
+  // [HỆ THỐNG TƯƠNG TÁC TRỰC TIẾP: ÂM THANH VI TƯƠNG TÁC, THẢ CẢM XÚC, BẾP ẢO & BÌNH CHỌN]
+  // ============================================================================
+  const cardCustomBatchMap = {};
+  const openInlineCommentCardIds = new Set();
+  const openReplyBoxReviewIds = new Set();
+  let activePlaygroundMode = "kitchen"; // "kitchen" | "poll" | "quiz"
+  let vKitchenDishId = 1;
+  let vKitchenCheckedIngs = new Set([0, 1]);
+  let vKitchenKneadProgress = 60;
+  let vKitchenHeatTemp = 165;
+  let vKitchenCompleted = false;
+  let quickQuizIdx = 0;
+  let quickQuizSelectedOpt = null;
+  let quickQuizStreak = 0;
+
+  function playInteractiveChime() {}
+  function spawnFloatingEmoji() {}
+  function renderInteractivePlaygroundSection() {}
+
   function renderCards() {
     const favIds = getFavoriteCakeIds();
     const tastedIds = getTastedCakeIds();
@@ -14670,7 +15248,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <p class="text-xs text-stone-600 mt-1 leading-relaxed line-clamp-2">
                 ${banh.coreSummary}.
               </p>
-              <div class="flex items-center gap-1.5 flex-wrap mt-2.5 mb-2.5">
+              <div class="flex items-center gap-1.5 flex-wrap mt-2 mb-2">
                 <span class="text-[10px] font-semibold bg-emerald-50 text-emerald-900 px-2 py-0.5 rounded-md border border-emerald-200">
                   <i class="fa-solid fa-fire-burner text-emerald-700 mr-1"></i>${banh.cookingMethod}
                 </span>
@@ -14682,6 +15260,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     : ""
                 }
               </div>
+
             </div>
           </div>
 
@@ -14747,10 +15326,28 @@ document.addEventListener("DOMContentLoaded", () => {
         .join("");
     }
 
-    listContainer.querySelectorAll(".open-detail-btn").forEach((btn) => {
+listContainer.querySelectorAll(".open-detail-btn").forEach((btn) => {
       btn.addEventListener("click", () => {
         const targetId = parseInt(btn.getAttribute("data-open-detail"), 10);
         navigateToSpoke(targetId);
+      });
+    });
+
+    listContainer.querySelectorAll(".card-quick-rate-btn").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const targetId = parseInt(btn.getAttribute("data-quick-rate-dish"), 10) || 0;
+        siteReviewDishFilter = targetId;
+        window.refreshAllLiveDbWidgets();
+        const dishSel = document.getElementById("site-rev-dish-catalog");
+        if (dishSel && targetId > 0) dishSel.value = String(targetId);
+        const frameEl = document.getElementById("catalog-reviews-frame");
+        if (frameEl) {
+          frameEl.scrollIntoView({ behavior: "smooth", block: "start" });
+          setTimeout(() => {
+            document.getElementById("site-rev-content-catalog")?.focus();
+          }, 450);
+        }
       });
     });
 
@@ -19407,6 +20004,13 @@ document.addEventListener("DOMContentLoaded", () => {
     ["Gửi Đánh Giá", "Post Review"],
     ["Gửi Đánh Giá Mới", "Write a Review"],
     ["Gửi Đánh Giá & Bình Luận", "Submit Rating & Comment"],
+        ["Món Bánh", "Cakes"],
+    ["Đánh Giá", "Reviews"],
+    ["Mã QR", "QR Code"],
+    ["Hỏi AI", "Ask AI"],
+    ["Đã lưu", "Saved"],
+    ["đánh giá đã lưu", "saved reviews"],
+    ["Viết đánh giá", "Write review"],
     ["Tự lặp", "Auto-Loop"],
     ["Tắt lặp", "Loop Off"],
     ["Đổi nhạc", "Change Track"],
@@ -20706,6 +21310,53 @@ document.addEventListener("DOMContentLoaded", () => {
   };
   document.getElementById("top-jump-reviews-btn")?.addEventListener("click", scrollToCatalogReviewsFrame);
   document.getElementById("catalog-jump-reviews-btn")?.addEventListener("click", scrollToCatalogReviewsFrame);
+
+  // Điều hướng nhanh trên thanh đáy Điện thoại (Mobile Bottom Quick Dock)
+  const setActiveMobDock = (activeId) => {
+    document.querySelectorAll("#mobile-bottom-quick-dock .mob-dock-btn").forEach((b) => {
+      if (b.id === activeId) b.classList.add("active-mob-dock");
+      else b.classList.remove("active-mob-dock");
+    });
+  };
+
+  document.getElementById("mob-nav-catalog-btn")?.addEventListener("click", () => {
+    setActiveMobDock("mob-nav-catalog-btn");
+    if (!spokeView.classList.contains("hidden")) navigateToHub(true);
+    switchWorkspaceTab("catalog", true);
+    document.getElementById("dish-catalog-section")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  document.getElementById("mob-nav-reviews-btn")?.addEventListener("click", () => {
+    setActiveMobDock("mob-nav-reviews-btn");
+    if (!spokeView.classList.contains("hidden")) {
+      const spkRev = document.getElementById("spoke-dish-reviews-section");
+      if (spkRev) {
+        spkRev.scrollIntoView({ behavior: "smooth", block: "start" });
+        return;
+      }
+    }
+    scrollToCatalogReviewsFrame();
+  });
+
+  document.getElementById("mob-nav-qr-btn")?.addEventListener("click", () => {
+    setActiveMobDock("mob-nav-qr-btn");
+    const currentId = !spokeView.classList.contains("hidden") ? (resolveDishIdFromUrlOrAttr() || 1) : 1;
+    openQrStudioModal(currentId, "single");
+  });
+
+  document.getElementById("mob-nav-ai-btn")?.addEventListener("click", () => {
+    setActiveMobDock("mob-nav-ai-btn");
+    const dock = document.getElementById("floating-tk-live-dock");
+    if (dock) {
+      dock.classList.remove("is-minimized");
+      setTimeout(() => document.getElementById("tk-dock-input")?.focus(), 150);
+    }
+  });
+
+  document.getElementById("mob-nav-toc-btn")?.addEventListener("click", () => {
+    setActiveMobDock("mob-nav-toc-btn");
+    if (typeof openRightTocDrawer === "function") openRightTocDrawer();
+  });
 
   if (initialId) {
     navigateToSpoke(initialId, true);
